@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.defaultInterpreterPath": "C:\\dev\\InterfacesPy\\venv-3-10\\Scripts\\python.exe",
+		"python.terminal.activateEnvironment": true
+	}
+}
