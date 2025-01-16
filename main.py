@@ -6,9 +6,11 @@ import sqlite3
 from datetime import datetime
 from Conection import Conection
 from Trabajador import Trabajador
+from Log import log
+from FichajeManager import FichajeManager
 
 
-class Main(QMainWindow):
+class Main(QMainWindow):        
 
     def __init__(self, parent=None):
         super(Main, self).__init__()
@@ -24,25 +26,74 @@ class Main(QMainWindow):
         self.menu_frame = self.findChild(QFrame, 'menu_frame')
         # Fichar button
         self.fichar_button = self.findChild(QPushButton, 'fichar_boton')
-        self.fichar_button.clicked.connect(lambda: self.content_frame.setCurrentIndex(0))
+        self.fichar_button.setEnabled(False)
+        self.fichar_button.clicked.connect(lambda: handle_fichar_button())
+        def handle_fichar_button():
+            self.content_frame.setCurrentIndex(0)
+            self.imprimir_button.setEnabled(True)
+            self.fichar_button.setEnabled(False)
+            
         # Impresion button
         self.imprimir_button = self.findChild(QPushButton, 'imprimir_boton')
-        self.imprimir_button.clicked.connect(lambda: self.content_frame.setCurrentIndex(1))
+        self.imprimir_button.clicked.connect(lambda: handle_imprimir_button())
+        def handle_imprimir_button():
+            self.content_frame.setCurrentIndex(1)
+            self.fichar_button.setEnabled(True)
+            self.imprimir_button.setEnabled(False)
         
         #* Lower frame
         self.lower_frame = self.findChild(QFrame, 'lower_frame')
         self.lower_frame.hide()
+        log.frame = self.lower_frame
         
         # Buttons in phase 1
-        self.emitir_fichaje = self.findChild(QPushButton, 'emitir_fichaje')
-        codigo_trabajador = self.findChild(QLineEdit, 'codigo_placeholder')
-        self.emitir_fichaje.clicked.connect(lambda: self.seleccionar_trabajador(codigo_trabajador.text()))
         
-        # Update time
+        self.emitir_fichaje = self.findChild(QPushButton, 'emitir_fichaje')
+        self.emitir_fichaje.clicked.connect(
+            lambda: handle_emitir_fichaje(self)
+        )
+
+        def handle_emitir_fichaje(self):
+            codigo_trabajador = self.findChild(QLineEdit, 'codigo_placeholder')
+            trabajador = FichajeManager.seleccionar_trabajador(codigo_trabajador.text())
+            self.aceptar_fichaje(trabajador)
+            
+            
+        #* Update time
         self.temporizar = QTimer(self)
         self.temporizar.timeout.connect(self.update_label_time)
         self.temporizar.start(1000)  # Update every second
         self.update_label_time()
+        
+        
+        #* phase 2
+        self.lista_checkins = self.findChild(QListWidget, 'list_checkins')
+        self.date_start = self.findChild(QDateTimeEdit, 'date_start')
+        self.date_end = self.findChild(QDateTimeEdit, 'date_end')
+        self.imprimir_setup()
+        
+    
+    def imprimir_setup(self):
+        """
+        Set up the printing phase
+        """
+        self.date_start.setDateTime(datetime.now())
+        self.date_end.setDateTime(datetime.now())
+        self.date_start.setDisplayFormat("dd/MM/yyyy HH:mm:ss")
+        self.date_end.setDisplayFormat("dd/MM/yyyy HH:mm:ss")
+        
+        self.date_start.dateTimeChanged.connect(lambda: self.update_checkins())
+        self.date_end.dateTimeChanged.connect(lambda: self.update_checkins())
+        self.update_checkins()
+    
+    def update_checkins(self):
+        start_date = self.date_start.dateTime().toString("dd/MM/yyyy HH:mm:ss")
+        end_date = self.date_end.dateTime().toString("dd/MM/yyyy HH:mm:ss")
+        checkins = Conection.entries_between_dates("reloj", start_date, end_date)
+        self.lista_checkins.clear()
+        for checkin in checkins:
+            self.lista_checkins.addItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} {checkin[4]}")
+        
         
 
     def update_label_time(self):
@@ -51,76 +102,6 @@ class Main(QMainWindow):
         self.current_hour.setText(hora_actual.toString("HH:mm:ss"))
         self.current_time.setText(fecha_actual.toString("dd/MM/yyyy"))
     
-    def mostrar_error(self, mensaje):
-        """
-        Muestra un mensaje de error en la interfaz gráfica
-        """
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Icon.Critical)
-        msg.setText(mensaje)
-        msg.setWindowTitle("Error")
-        msg.exec()
-    
-    def seleccionar_trabajador(self, codigo):
-        """
-        Selecciona un trabajador a partir del código y realiza el fichaje
-        """
-        conn = None
-        try:
-            conn = Conection.get_connection()
-            cursor = conn.cursor()
-            cursor.execute("SELECT id, nombre, apellidos, estado, dni FROM trabajadores WHERE codigo=?", (codigo,))
-            trabajador = cursor.fetchone()
-
-            if trabajador:
-                idtr, nombre, apellidos, estado, dni = trabajador
-                trabajador_obj = Trabajador(idtr, nombre, apellidos, estado, dni)
-
-                self.aceptar_fichaje(trabajador_obj)
-           
-            else:
-                self.mostrar_error("Código erróneo")
-                with open('log.txt', 'a') as log_file:
-                    log_file.write(f"-;-;{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};Código erróneo\n")
-        
-        except sqlite3.Error as e:
-            self.mostrar_error("Fallo acceso a la BBDD")
-            with open('log.txt', 'a') as log_file:
-                log_file.write(f"-;-;{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};Fallo acceso a la BBDD\n")
-        
-        finally:
-            if conn:
-                conn.close()
-    
-    def fichar(self, tr):
-        conn = None
-        try:
-            print("Fichando")
-            conn = Conection.get_connection()
-            cursor = conn.cursor()
-            tr.cambiar_estado()
-            
-            cursor.execute("UPDATE trabajadores SET estado=? WHERE id=?", (tr.estado, tr.idtr))
-            conn.commit()
-            fecha_hora_actual = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-            cursor.execute("INSERT INTO reloj (idtr, nombre, fecha, hora, estado) VALUES (?, ?, ?, ?, ?)",
-                        (tr.idtr, tr.nombre, fecha_hora_actual.split()[0], fecha_hora_actual.split()[1], tr.estado))
-            conn.commit()
-            
-            self.emitir_fichaje.setEnabled(True)
-            self.lower_frame.hide()
-            
-            with open('log.txt', 'a') as log_file:
-                log_file.write(f"{tr.idtr};{tr.nombre};{fecha_hora_actual};{tr.estado}\n")
-                
-        except sqlite3.Error as e:
-            self.mostrar_error("Fallo acceso a la BBDD - fichar")
-            with open('log.txt', 'a') as log_file:
-                log_file.write(f"-;-;{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};Fallo acceso a la BBDD\n")
-        
-        finally:
-            if conn:
-                conn.close()
     
     def aceptar_fichaje(self, trabajador):
         """
@@ -128,16 +109,21 @@ class Main(QMainWindow):
         If the user accepts, method fichar is called
         Otherwise hide again
         """
+        if trabajador is None or not isinstance(trabajador, Trabajador):
+            print("El parámetro trabajador no es una instancia de la clase Trabajador - aceptar_fichaje")
+            return None
+        
         self.lower_frame.show()
         
         info_text = self.findChild(QTextEdit, 'show_info')
         accept_button = self.findChild(QPushButton, 'accept_button')
         reject_button = self.findChild(QPushButton, 'reject_button')
         self.emitir_fichaje.setEnabled(False)
+        
 
         info_text.setText(f"¿Estás seguro de que deseas fichar {trabajador.nombre} {trabajador.apellidos}?")
 
-        def reject():
+        def go_back():
             self.lower_frame.hide()
             self.emitir_fichaje.setEnabled(True)
 
@@ -148,8 +134,12 @@ class Main(QMainWindow):
         except TypeError:
             pass
 
-        accept_button.clicked.connect(lambda: self.fichar(trabajador))
-        reject_button.clicked.connect(lambda: reject())
+        def rechazar_fichaje():
+            go_back()
+            log.log_reject_acceso(trabajador, "Fichaje cancelado")
+
+        accept_button.clicked.connect(lambda: FichajeManager.fichar(trabajador, go_back))
+        reject_button.clicked.connect(lambda: rechazar_fichaje())
 
 
         
