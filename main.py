@@ -47,6 +47,8 @@ class Main(QMainWindow):
         log.frame = self.lower_frame
         
         # Buttons in phase 1
+        self.codigo_trabajador = self.findChild(QLineEdit, 'codigo_placeholder')
+        self.codigo_trabajador.setFocus()
         
         self.emitir_fichaje = self.findChild(QPushButton, 'emitir_fichaje')
         self.emitir_fichaje.clicked.connect(
@@ -54,8 +56,7 @@ class Main(QMainWindow):
         )
 
         def handle_emitir_fichaje(self):
-            codigo_trabajador = self.findChild(QLineEdit, 'codigo_placeholder')
-            trabajador = FichajeManager.seleccionar_trabajador(codigo_trabajador.text())
+            trabajador = FichajeManager.seleccionar_trabajador(self.codigo_trabajador.text())
             self.aceptar_fichaje(trabajador)
             
             
@@ -71,8 +72,8 @@ class Main(QMainWindow):
         self.date_start = self.findChild(QDateTimeEdit, 'date_start')
         self.date_end = self.findChild(QDateTimeEdit, 'date_end')
         self.imprimir_setup()
-        
-    
+
+
     def imprimir_setup(self):
         """
         Set up the printing phase
@@ -89,7 +90,7 @@ class Main(QMainWindow):
     def update_checkins(self):
         start_date = self.date_start.dateTime().toString("dd/MM/yyyy HH:mm:ss")
         end_date = self.date_end.dateTime().toString("dd/MM/yyyy HH:mm:ss")
-        checkins = Conection.entries_between_dates("reloj", start_date, end_date)
+        checkins = Conection.entries_between_datetimes("reloj", start_date, end_date)
         self.lista_checkins.clear()
         for checkin in checkins:
             self.lista_checkins.addItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} {checkin[4]}")
@@ -124,6 +125,8 @@ class Main(QMainWindow):
         info_text.setText(f"¿Estás seguro de que deseas fichar {trabajador.nombre} {trabajador.apellidos}?")
 
         def go_back():
+            self.codigo_trabajador.clear()
+            self.codigo_trabajador.setFocus()
             self.lower_frame.hide()
             self.emitir_fichaje.setEnabled(True)
 

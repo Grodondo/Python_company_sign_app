@@ -64,3 +64,14 @@
 1;Juan;17/01/2025 00:27:34;out
 1;Juan;17/01/2025 00:28:00;Fichaje cancelado
 1;Juan;17/01/2025 00:28:06;Fichaje cancelado
+-;-;17/01/2025 00:30:46;Código erróneo
+-;-;17/01/2025 00:49:56;Código erróneo
+-;-;17/01/2025 00:50:01;Código erróneo
+-;-;17/01/2025 00:52:53;Código erróneo
+1;Juan;17/01/2025 00:53:01;Fichaje cancelado
+-;-;17/01/2025 00:53:07;Código erróneo
+-;-;17/01/2025 00:53:14;Código erróneo
+-;-;17/01/2025 00:59:35;Código erróneo
+-;-;17/01/2025 10:45:08;Código erróneo
+-;-;17/01/2025 11:20:15;Código erróneo
+1;Juan;17/01/2025 11:26:30;in
