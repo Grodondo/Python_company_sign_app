@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDateTimeEdit, QFrame, QGridLayout,
-    QLabel, QLineEdit, QListWidget, QListWidgetItem,
-    QMainWindow, QPushButton, QSizePolicy, QStackedWidget,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QDateTimeEdit, QFrame,
+    QGridLayout, QLabel, QLineEdit, QListWidget,
+    QListWidgetItem, QMainWindow, QPushButton, QSizePolicy,
+    QStackedWidget, QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -167,7 +167,10 @@ class Ui_MainWindow(object):
 "         background-color: #FFFFFF;\n"
 "         border: 1px solid #444;\n"
 "         color: #000;\n"
+"		\n"
+"font: 10pt \"MS Shell Dlg 2\";\n"
 "       ")
+        self.list_checkins.setSelectionMode(QAbstractItemView.MultiSelection)
         self.date_start = QDateTimeEdit(self.page_2)
         self.date_start.setObjectName(u"date_start")
         self.date_start.setGeometry(QRect(70, 110, 211, 41))
@@ -195,15 +198,20 @@ class Ui_MainWindow(object):
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(14, 250, 311, 41))
         font1 = QFont()
-        font1.setFamilies([u"Segoe UI,Tahoma,Geneva,Verdana,sans-serif"])
+        font1.setFamilies([u"MS Shell Dlg 2"])
+        font1.setPointSize(12)
+        font1.setBold(False)
+        font1.setItalic(False)
         self.label.setFont(font1)
-        self.label.setStyleSheet(u"\n"
-"         color: #FFB41D;\n"
+        self.label.setStyleSheet(u"color: #FFB41D;\n"
+"font: 75 12pt \"MS Shell Dlg 2\";\n"
 "       ")
         self.label_2 = QLabel(self.page_2)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(70, 60, 211, 41))
-        self.label_2.setFont(font1)
+        font2 = QFont()
+        font2.setFamilies([u"Segoe UI,Tahoma,Geneva,Verdana,sans-serif"])
+        self.label_2.setFont(font2)
         self.label_2.setStyleSheet(u"\n"
 "         color: #FFB41D;\n"
 "       ")
@@ -211,20 +219,20 @@ class Ui_MainWindow(object):
         self.label_3 = QLabel(self.page_2)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(430, 60, 211, 41))
-        self.label_3.setFont(font1)
+        self.label_3.setFont(font2)
         self.label_3.setStyleSheet(u"\n"
 "         color: #FFB41D;\n"
 "       ")
         self.label_3.setAlignment(Qt.AlignCenter)
-        self.imprimir_button = QPushButton(self.page_2)
-        self.imprimir_button.setObjectName(u"imprimir_button")
-        self.imprimir_button.setGeometry(QRect(430, 340, 161, 61))
-        font2 = QFont()
-        font2.setFamilies([u"Segoe UI,Tahoma,Geneva,Verdana,sans-serif"])
-        font2.setUnderline(False)
-        font2.setStrikeOut(False)
-        self.imprimir_button.setFont(font2)
-        self.imprimir_button.setStyleSheet(u"\n"
+        self.pdf_printer = QPushButton(self.page_2)
+        self.pdf_printer.setObjectName(u"pdf_printer")
+        self.pdf_printer.setGeometry(QRect(430, 340, 161, 61))
+        font3 = QFont()
+        font3.setFamilies([u"Segoe UI,Tahoma,Geneva,Verdana,sans-serif"])
+        font3.setUnderline(False)
+        font3.setStrikeOut(False)
+        self.pdf_printer.setFont(font3)
+        self.pdf_printer.setStyleSheet(u"\n"
 "         QPushButton {\n"
 "           background-color: #FF5722;\n"
 "           color: white;\n"
@@ -302,7 +310,8 @@ class Ui_MainWindow(object):
 "          background-color: #F0FFFF;\n"
 "          color: #000;\n"
 "          border: 1px solid #444;\n"
-"        ")
+"        \n"
+"font: 14pt \"MS Shell Dlg 2\";")
 
         self.gridLayout_2.addWidget(self.show_info, 0, 0, 2, 1)
 
@@ -324,10 +333,10 @@ class Ui_MainWindow(object):
         self.teclea_codigo_label.setText(QCoreApplication.translate("MainWindow", u"Teclea tu Codigo", None))
         self.current_time.setText(QCoreApplication.translate("MainWindow", u"Fecha", None))
         self.current_hour.setText(QCoreApplication.translate("MainWindow", u"Hora", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Estado Trabajadores", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Trabajadores: ", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Fecha Desde", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Fecha Hasta", None))
-        self.imprimir_button.setText(QCoreApplication.translate("MainWindow", u"Imprimir", None))
+        self.pdf_printer.setText(QCoreApplication.translate("MainWindow", u"Imprimir", None))
         self.accept_button.setText(QCoreApplication.translate("MainWindow", u"Accept", None))
         self.reject_button.setText(QCoreApplication.translate("MainWindow", u"Reject", None))
     # retranslateUi

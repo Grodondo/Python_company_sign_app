@@ -24,47 +24,6 @@ class Conection:
             return None
 
 
-
-    @classmethod
-    def entries_between_datetimes(cls, table, start_datetime, end_datetime):
-        """
-        Devuelve las entradas entre dos fechas y horas
-        """
-        conn = Conection.get_connection()
-        
-        start_date, start_time = start_datetime.split(" ")
-        end_date, end_time = end_datetime.split(" ")
-        # print(start_date, start_time," # ", end_date, end_time)
-        
-        if conn is not None:
-            cursor = conn.cursor()
-            cursor.execute( f"""
-                            SELECT * 
-                            FROM {table} 
-                            WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
-                            AND (fecha > '{start_date}' OR (fecha = '{start_date}' AND hora BETWEEN '{start_time}' AND '{end_time}'));
-                            """
-                            )
-            return cursor.fetchall()
-        else:
-            print("No se pudo establecer conexión con la base de datos")
-            return None
-        
-    @classmethod
-    @DeprecationWarning
-    def entries_between_dates(cls, table, start_date, end_date):
-        """
-        Devuelve las entradas entre dos fechas
-        """
-        conn = Conection.get_connection()
-        if conn is not None:
-            cursor = conn.cursor()
-            cursor.execute(f"SELECT * FROM {table} WHERE fecha BETWEEN '{start_date}' AND '{end_date}'")
-            return cursor.fetchall()
-        else:
-            print("No se pudo establecer conexión con la base de datos")
-            return None
-
     def delete_all_values(self, *tables):
         """
         Borra todos los valores de las tablas
@@ -120,8 +79,8 @@ class Conection:
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     idtr INTEGER NOT NULL,
                     nombre TEXT NOT NULL,
-                    fecha TEXT NOT NULL,
-                    hora TEXT NOT NULL,
+                    fecha DATE NOT NULL,
+                    hora TIME NOT NULL,
                     estado TEXT NOT NULL CHECK (estado IN ('in', 'out')),
                     FOREIGN KEY (idtr) REFERENCES trabajadores(id)
                 )

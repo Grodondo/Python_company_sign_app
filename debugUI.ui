@@ -295,7 +295,12 @@
          background-color: #FFFFFF;
          border: 1px solid #444;
          color: #000;
+		
+font: 10pt &quot;MS Shell Dlg 2&quot;;
        </string>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::MultiSelection</enum>
       </property>
      </widget>
      <widget class="QDateTimeEdit" name="date_start">
@@ -365,16 +370,20 @@
       </property>
       <property name="font">
        <font>
-        <family>Segoe UI,Tahoma,Geneva,Verdana,sans-serif</family>
+        <family>MS Shell Dlg 2</family>
+        <pointsize>12</pointsize>
+        <weight>9</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">
-         color: #FFB41D;
+       <string notr="true">color: #FFB41D;
+font: 75 12pt &quot;MS Shell Dlg 2&quot;;
        </string>
       </property>
       <property name="text">
-       <string>Estado Trabajadores</string>
+       <string>Trabajadores: </string>
       </property>
      </widget>
      <widget class="QLabel" name="label_2">
@@ -429,7 +438,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="imprimir_button">
+     <widget class="QPushButton" name="pdf_printer">
       <property name="geometry">
        <rect>
         <x>430</x>
@@ -566,7 +575,8 @@
           background-color: #F0FFFF;
           color: #000;
           border: 1px solid #444;
-        </string>
+        
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
       </widget>
      </item>

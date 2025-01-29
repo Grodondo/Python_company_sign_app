@@ -4,13 +4,18 @@ from PyQt6.QtCore import QTimer, Qt, pyqtSlot, QDate, QTime
 from PyQt6 import uic
 import sqlite3
 from datetime import datetime
-from Conection import Conection
+from db_py.Conection import Conection
 from Trabajador import Trabajador
 from Log import log
 from FichajeManager import FichajeManager
+from PDF.PDF import PDF
+from db_py.queries import Query
 
 
 class Main(QMainWindow):        
+
+    date_format = "yyyy-MM-dd"
+    time_format = "HH:mm:ss"
 
     def __init__(self, parent=None):
         super(Main, self).__init__()
@@ -72,7 +77,16 @@ class Main(QMainWindow):
         self.date_start = self.findChild(QDateTimeEdit, 'date_start')
         self.date_end = self.findChild(QDateTimeEdit, 'date_end')
         self.imprimir_setup()
-
+        
+        #* Imprimir button
+        self.pdf_printer = self.findChild(QPushButton, 'pdf_printer')
+        self.pdf_printer.clicked.connect(lambda: hay_trabajadores(self))
+        def hay_trabajadores(self):
+            if self.lista_checkins.count() > 0:
+                pdf = PDF(self.lista_checkins, self.date_start, self.date_end)
+                pdf.generate()
+            else:
+                log.log_error("No hay trabajadores para imprimir")
 
     def imprimir_setup(self):
         """
@@ -80,28 +94,29 @@ class Main(QMainWindow):
         """
         self.date_start.setDateTime(datetime.now())
         self.date_end.setDateTime(datetime.now())
-        self.date_start.setDisplayFormat("dd/MM/yyyy HH:mm:ss")
-        self.date_end.setDisplayFormat("dd/MM/yyyy HH:mm:ss")
-        
+        self.date_start.setDisplayFormat(f"{self.date_format} {self.time_format}")
+        self.date_end.setDisplayFormat(f"{self.date_format} {self.time_format}")
+    
         self.date_start.dateTimeChanged.connect(lambda: self.update_checkins())
         self.date_end.dateTimeChanged.connect(lambda: self.update_checkins())
         self.update_checkins()
     
     def update_checkins(self):
-        start_date = self.date_start.dateTime().toString("dd/MM/yyyy HH:mm:ss")
-        end_date = self.date_end.dateTime().toString("dd/MM/yyyy HH:mm:ss")
-        checkins = Conection.entries_between_datetimes("reloj", start_date, end_date)
+        start_date = self.date_start.dateTime().toString(f"{self.date_format} {self.time_format}")
+        end_date = self.date_end.dateTime().toString(f"{self.date_format} {self.time_format}")
+        # Get trabajadores between the selected dates
+        checkins = Query.get_trabajadores_between_datetimes(start_date, end_date)
         self.lista_checkins.clear()
         for checkin in checkins:
-            self.lista_checkins.addItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} {checkin[4]}")
+            self.lista_checkins.addItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} - {checkin[4]}")
         
         
 
     def update_label_time(self):
         fecha_actual = QDate.currentDate()
         hora_actual = QTime.currentTime()
-        self.current_hour.setText(hora_actual.toString("HH:mm:ss"))
-        self.current_time.setText(fecha_actual.toString("dd/MM/yyyy"))
+        self.current_hour.setText(hora_actual.toString(self.time_format))
+        self.current_time.setText(fecha_actual.toString(self.date_format))
     
     
     def aceptar_fichaje(self, trabajador):

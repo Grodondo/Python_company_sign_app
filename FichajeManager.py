@@ -1,5 +1,5 @@
 from datetime import datetime
-from Conection import Conection
+from db_py.Conection import Conection
 from Trabajador import Trabajador
 from Log import log
 import sqlite3
@@ -46,7 +46,7 @@ class FichajeManager:
             
             cursor.execute("UPDATE trabajadores SET estado=? WHERE id=?", (trabajador.estado, trabajador.idtr))
             conn.commit()
-            fecha_hora_actual = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            fecha_hora_actual = datetime.now()#.strftime("%d/%m/%Y %H:%M:%S")
             cursor.execute("INSERT INTO reloj (idtr, nombre, fecha, hora, estado) VALUES (?, ?, ?, ?, ?)",
                         (trabajador.idtr, trabajador.nombre, fecha_hora_actual.split()[0], fecha_hora_actual.split()[1], trabajador.estado))
             conn.commit()
