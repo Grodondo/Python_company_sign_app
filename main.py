@@ -82,11 +82,14 @@ class Main(QMainWindow):
         self.pdf_printer = self.findChild(QPushButton, 'pdf_printer')
         self.pdf_printer.clicked.connect(lambda: hay_trabajadores(self))
         def hay_trabajadores(self):
-            if self.lista_checkins.count() > 0:
-                pdf = PDF(self.lista_checkins, self.date_start, self.date_end)
+            selected_items = self.lista_checkins.selectedItems()
+            trabajadores = [item.data(Qt.ItemDataRole.UserRole) for item in selected_items]
+            if not selected_items:
+                log.log_error("Selecciona a algun trabajador para imprimir")
+            else :
+                print("Trabajadores seleccionados:", trabajadores)
+                pdf = PDF(trabajadores, self.date_start, self.date_end)
                 pdf.generate()
-            else:
-                log.log_error("No hay trabajadores para imprimir")
 
     def imprimir_setup(self):
         """
@@ -108,7 +111,9 @@ class Main(QMainWindow):
         checkins = Query.get_trabajadores_between_datetimes(start_date, end_date)
         self.lista_checkins.clear()
         for checkin in checkins:
-            self.lista_checkins.addItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} - {checkin[4]}")
+            item = QListWidgetItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} - {checkin[4]}")
+            item.setData(Qt.ItemDataRole.UserRole, checkin)
+            self.lista_checkins.addItem(item)
         
         
 

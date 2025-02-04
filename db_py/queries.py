@@ -2,14 +2,17 @@ from db_py.Conection import Conection
 
 class Query:
     @classmethod
-    def get_trabajadores(cls):
+    def get_trabajadores(cls, with_checkin=False):
         """
         Devuelve los trabajadores de la BBDD
         """
         conn =  Conection.get_connection()
         if conn is not None:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM trabajadores")
+            if with_checkin:
+                cursor.execute("SELECT * FROM trabajadores WHERE estado = 'in'")
+            else:
+                cursor.execute("SELECT * FROM trabajadores")
             trabajadores = cursor.fetchall()
             conn.close()
             return trabajadores
@@ -42,7 +45,7 @@ class Query:
                     AND
                     DATETIME(SUBSTR(r.fecha, 7, 4) || '-' || SUBSTR(r.fecha, 4, 2) || '-' || SUBSTR(r.fecha, 1, 2) || ' ' || r.hora) <= '{end_datetime}';
             """
-            print("Executing query:", query)
+            # print("Executing query:", query)
 
             # Execute query
             cursor.execute(query)
@@ -58,81 +61,38 @@ class Query:
 
 
     @classmethod
-    def entries_between_datetimes(cls, table, start_datetime, end_datetime):
+    def entries_between_datetimes(cls, table, start_datetime, end_datetime, worker_id=None):
         """
-        Fetch entries between two datetimes, handling DD/MM/YYYY date format.
+        Fetch entries between two datetimes with optional worker filter
         """
         conn = Conection.get_connection()
+        if conn is None:
+            print("No se pudo establecer conexión con la base de datos")
+            return None
 
-        if conn is not None:
+        try:
             cursor = conn.cursor()
-
-            # Debugging input
-            print("Start datetime:", start_datetime)
-            print("End datetime:", end_datetime)
-
-            # Query with format conversion
-            query = f"""
+            base_query = f"""
                 SELECT *
                 FROM {table}
-                WHERE
-                    DATETIME(SUBSTR(fecha, 7, 4) || '-' || SUBSTR(fecha, 4, 2) || '-' || SUBSTR(fecha, 1, 2) || ' ' || hora) >= '{start_datetime}'
-                    AND
-                    DATETIME(SUBSTR(fecha, 7, 4) || '-' || SUBSTR(fecha, 4, 2) || '-' || SUBSTR(fecha, 1, 2) || ' ' || hora) <= '{end_datetime}';
+                WHERE datetime(
+                    SUBSTR(fecha, 7, 4) || '-' || 
+                    SUBSTR(fecha, 4, 2) || '-' || 
+                    SUBSTR(fecha, 1, 2) || ' ' || hora
+                ) BETWEEN ? AND ?
             """
-            print("Executing query:", query)
+            
+            if worker_id is not None:
+                base_query += " AND idtr = ?"
+                params = (start_datetime, end_datetime, worker_id)
+            else:
+                params = (start_datetime, end_datetime)
 
-            # Execute query
-            cursor.execute(query)
-            entries = cursor.fetchall()
-
-            # Debugging output
-            print("Entries:", entries)
+            cursor.execute(base_query, params)
+            return cursor.fetchall()
+        finally:
             conn.close()
-            return entries
-        else:
-            print("No se pudo establecer conexión con la base de datos")
-            return None
 
-
-
-    @classmethod
-    def entries_between_datetimess(cls, table, start_datetime, end_datetime):
-        """
-        Devuelve las entradas entre dos fechas y horas
-        """
-        conn = Conection.get_connection()
-        
-        start_date, start_time = start_datetime.split(" ")
-        end_date, end_time = end_datetime.split(" ")
-        print(start_date, start_time," # ", end_date, end_time)
-        
-        if conn is not None:
-            cursor = conn.cursor()
-            cursor.execute( f"""
-                            SELECT * 
-                            FROM {table} 
-                            WHERE 
-                            (fecha > '{start_date}' OR (fecha = '{start_date}' AND hora >= '{start_time}')) 
-                            AND 
-                            (fecha < '{end_date}' OR (fecha = '{end_date}' AND hora <= '{end_time}'));
-                            """
-                            )
-            # cursor.execute( f"""
-            #                 SELECT * 
-            #                 FROM {table} 
-            #                 WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
-            #                 AND (fecha > '{start_date}' OR (fecha = '{start_date}' AND hora BETWEEN '{start_time}' AND '{end_time}'));
-            #                 """
-            #                 )
-            entries = cursor.fetchall()
-            print(entries)
-            conn.close()
-            return entries
-        else:
-            print("No se pudo establecer conexión con la base de datos")
-            conn.close()
-            return None
         
     @classmethod
     def entries_between_dates(cls, table, start_date, end_date):

@@ -107,3 +107,16 @@
 1;Juan;22/01/2025 20:29:43;out
 4;Ana;22/01/2025 20:29:47;in
 1;Juan;22/01/2025 20:33:42;in
+-;-;04/02/2025 19:07:23;No hay trabajadores para imprimir
+-;-;04/02/2025 19:12:46;Código erróneo
+-;-;04/02/2025 19:12:54;No hay trabajadores para imprimir
+-;-;04/02/2025 19:13:09;No hay trabajadores para imprimir
+-;-;04/02/2025 19:45:37;Selecciona a algun trabajador para imprimir
+-;-;04/02/2025 19:53:47;Selecciona a algun trabajador para imprimir
+1;Juan;04/02/2025 20:03:54;in
+1;Juan;04/02/2025 20:03:59;out
+-;-;04/02/2025 20:04:02;Código erróneo
+4;Ana;04/02/2025 20:04:10;out
+1;Juan;04/02/2025 20:08:35;in
+1;Juan;04/02/2025 20:09:28;out
+4;Ana;04/02/2025 20:09:33;in
