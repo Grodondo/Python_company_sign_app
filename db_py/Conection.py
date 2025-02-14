@@ -24,6 +24,7 @@ class Conection:
             return None
 
 
+# ------------------------------------ DEBUGGING FUNCTIONS ------------------------------------
     def delete_all_values(self, *tables):
         """
         Borra todos los valores de las tablas

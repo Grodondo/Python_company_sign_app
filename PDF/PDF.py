@@ -8,33 +8,33 @@ class PDF:
         self.start_datetime = start_datetime
         self.end_datetime = end_datetime
         
-        # Format datetimes for filename
+        # Formatear las fechas y horas para el nombre del archivo
         self.date_start_str = self._format_datetime(start_datetime, "yyyy-MM-dd_HH-mm-ss")
         self.date_end_str = self._format_datetime(end_datetime, "yyyy-MM-dd_HH-mm-ss")
         self.pdf_path = f"PDF/check_ins/check_ins_{self.date_start_str}-to-{self.date_end_str}.pdf"
 
     def _format_datetime(self, dt, format_str):
-        """Handle QDateTime to string conversion"""
+        """Maneja la conversión de QDateTime a cadena"""
         if hasattr(dt, 'dateTime'):
             return dt.dateTime().toString(format_str)
         return dt.toString(format_str)
 
     def generate(self):
-        """Generate PDF report with check-in data"""
+        """Genera el reporte PDF con datos de check-in"""
         pdf = fpdf.FPDF()
         pdf.add_page()
         pdf.set_auto_page_break(auto=True, margin=15)
         
-        # Set formal styling
+        # Configurar estilo formal
         self._create_header(pdf)
         
-        # Add worker sections
+        # Agregar secciones para cada trabajador
         for trabajador in self.trabajadores:
             self._add_worker_section(pdf, trabajador)
             
         self._add_footer(pdf)
         
-        # Save PDF
+        # Guardar PDF
         try:
             pdf.output(self.pdf_path)
             print(f"PDF generado: {self.pdf_path}")
@@ -42,8 +42,8 @@ class PDF:
             print("Error al generar PDF:", e)
 
     def _create_header(self, pdf):
-        """Add report header"""
-        pdf.image('logo.png', 15, 5, 25)
+        """Agregar cabecera del reporte"""
+        pdf.image('assets/logo.png', 15, 5, 25)
         pdf.ln(5)
         
         pdf.set_font('Times', 'B', 16)
@@ -56,14 +56,14 @@ class PDF:
         pdf.ln(15)
 
     def _add_worker_section(self, pdf, trabajador):
-        """Add section for each worker"""
+        """Agregar sección para cada trabajador"""
         worker_id = trabajador[0]
         nombre = f"{trabajador[1]} {trabajador[2]}"
         dni = trabajador[3]
         codigo = trabajador[4]
         estado = trabajador[5]
 
-        # Worker header
+        # Cabecera del trabajador
         pdf.set_font('Times', 'B', 12)
         pdf.cell(0, 10, f'Trabajador: {nombre}', 0, 1)
         pdf.set_font('Times', '', 12)
@@ -71,7 +71,7 @@ class PDF:
         pdf.cell(0, 10, f'Estado Actual: {estado.upper()}', 0, 1)
         pdf.ln(5)
 
-        # Get check-ins using centralized query method
+        # Obtener check-ins usando el método centralizado de consulta
         checkins = Query.entries_between_datetimes(
             'reloj',
             self._format_datetime(self.start_datetime, "yyyy-MM-dd HH:mm:ss"),
@@ -79,50 +79,85 @@ class PDF:
             worker_id
         )
         
-        # Add check-in table
+        # Agregar tabla de check-ins (ahora con tiempo transcurrido para cada 'OUT')
         if checkins:
             self._create_checkins_table(pdf, checkins)
         else:
             pdf.cell(0, 10, 'No se encontraron check-ins en este período.', 0, 1)
             pdf.ln(10)
 
-        # Page break check
+        # Verificar salto de página
         if pdf.get_y() > 250:
             pdf.add_page()
 
     def _create_checkins_table(self, pdf, checkins):
-        """Create formatted check-ins table"""
+        """Crear tabla formateada de check-ins con tiempo transcurrido para cada check-in 'OUT'"""
         pdf.set_font('Times', 'B', 11)
-        col_widths = [60, 40, 30]
+        # Definir anchos de columna para cuatro columnas: Fecha, Hora, Estado, Tiempo
+        col_widths = [40, 30, 30, 40]
         
-        # Table header
+        # Cabecera de la tabla
         pdf.cell(col_widths[0], 10, 'Fecha', 1, 0, 'C')
         pdf.cell(col_widths[1], 10, 'Hora', 1, 0, 'C')
-        pdf.cell(col_widths[2], 10, 'Estado', 1, 1, 'C')
+        pdf.cell(col_widths[2], 10, 'Estado', 1, 0, 'C')
+        pdf.cell(col_widths[3], 10, 'Tiempo Checkin', 1, 1, 'C')
         
-        # Table rows
+        # Ordenar los check-ins cronológicamente usando nuestro método auxiliar
+        sorted_checkins = sorted(checkins, key=self._entry_to_datetime)
+        
+        # Filas de la tabla con cálculo del tiempo transcurrido
         pdf.set_font('Times', '', 11)
-        for entry in checkins:
-            fecha = entry[3]  # Assuming fecha is at index 3
-            hora = entry[4]   # Assuming hora is at index 4
-            estado = entry[5] # Assuming estado is at index 5
+        last_in = None
+        for entry in sorted_checkins:
+            dt = self._entry_to_datetime(entry)
+            fecha_display = dt.strftime("%Y-%m-%d")
+            hora_display = dt.strftime("%H:%M:%S")
+            estado = entry[5].strip().lower()
             
-            # Format date if necessary (DD/MM/YYYY to YYYY-MM-DD)
-            if len(fecha.split('/')) == 3:
-                day, month, year = fecha.split('/')
-                fecha = f"{year}-{month}-{day}"
+            if estado == "in":
+                last_in = dt
+                elapsed_str = "----------"
+            elif estado == "out":
+                if last_in is not None:
+                    elapsed = dt - last_in
+                    elapsed_str = self._format_elapsed(elapsed)
+                    last_in = None  # Reiniciar después de emparejar con un IN
+                else:
+                    elapsed_str = "N/A"
+            else:
+                elapsed_str = ""
             
-            pdf.cell(col_widths[0], 10, fecha, 1)
-            pdf.cell(col_widths[1], 10, hora, 1)
-            pdf.cell(col_widths[2], 10, estado.upper(), 1, 1)
+            pdf.cell(col_widths[0], 10, fecha_display, 1, 0, 'C')
+            pdf.cell(col_widths[1], 10, hora_display, 1, 0, 'C')
+            pdf.cell(col_widths[2], 10, estado.upper(), 1, 0, 'C')
+            pdf.cell(col_widths[3], 10, elapsed_str, 1, 1, 'C')
         
         pdf.ln(10)
 
+    def _entry_to_datetime(self, entry):
+        """Convierte una entrada de check-in a un objeto datetime."""
+        fecha = entry[3]
+        hora = entry[4]
+        # Convertir la fecha si está en formato DD/MM/YYYY
+        if '/' in fecha:
+            day, month, year = fecha.split('/')
+            fecha = f"{year}-{month}-{day}"
+        dt_str = f"{fecha} {hora}"
+        try:
+            return datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            return datetime.strptime(dt_str, "%Y-%m-%d %H:%M")
+        
+    def _format_elapsed(self, elapsed):
+        """Formatea el tiempo transcurrido como Hh Mm Ss."""
+        total_seconds = int(elapsed.total_seconds())
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        return f"{hours}h {minutes}m {seconds}s"
+
     def _add_footer(self, pdf):
-        """Add report footer"""
+        """Agregar pie de página al reporte."""
         pdf.set_y(-15)
         pdf.set_font('Times', 'I', 8)
         pdf.cell(0, 10, f'Generado el {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', 0, 0, 'C')
-
-    def get_text(self):
-        return 'Documento PDF generado'

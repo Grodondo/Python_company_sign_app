@@ -69,7 +69,7 @@ class log:
     
     
     @staticmethod
-    def log_reject_acceso(tr, mensaje):
+    def log_reject_acceso(tr: Trabajador, mensaje):
         if log.frame:
             log.mostrar_error_widget(mensaje)
         else:
@@ -79,8 +79,14 @@ class log:
             log_file.write(f"{tr.idtr};{tr.nombre};{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};{mensaje}\n")
     
     @staticmethod
-    def log_acceso(tr):
-          
-        print(f"{tr.idtr};{tr.nombre};{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};{tr.estado}")
+    def log_acceso(tr: Trabajador):
+        # print(f"{tr.idtr};{tr.nombre};{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};{tr.estado}")
         with open('log.txt', 'a') as log_file:
             log_file.write(f"{tr.idtr};{tr.nombre};{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};{tr.estado}\n")
+            
+    @staticmethod
+    def log_desconexion_forzada(tr: Trabajador):
+        # print(f"{tr.idtr};{tr.nombre};{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};out")
+        with open('log.txt', 'a') as log_file:
+            log_file.write(f"{tr.idtr};{tr.nombre};{datetime.now().strftime('%d/%m/%Y %H:%M:%S')};out; -Desconexión forzada-\n")
+        

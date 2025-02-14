@@ -14,81 +14,81 @@
 1;Juan;14/01/2025 20:40:59;out
 1;Juan;14/01/2025 20:41:01;in
 1;Juan;14/01/2025 20:41:07;out
--;-;14/01/2025 20:43:51;Código erróneo
--;-;14/01/2025 20:49:56;Código erróneo
--;-;14/01/2025 21:07:23;Código erróneo
+-;-;14/01/2025 20:43:51;Cï¿½digo errï¿½neo
+-;-;14/01/2025 20:49:56;Cï¿½digo errï¿½neo
+-;-;14/01/2025 21:07:23;Cï¿½digo errï¿½neo
 1;Juan;14/01/2025 21:07:34;in
--;-;15/01/2025 20:54:01;Código erróneo
--;-;15/01/2025 20:54:16;Código erróneo
--;-;15/01/2025 20:54:20;Código erróneo
--;-;15/01/2025 20:54:59;Código erróneo
+-;-;15/01/2025 20:54:01;Cï¿½digo errï¿½neo
+-;-;15/01/2025 20:54:16;Cï¿½digo errï¿½neo
+-;-;15/01/2025 20:54:20;Cï¿½digo errï¿½neo
+-;-;15/01/2025 20:54:59;Cï¿½digo errï¿½neo
 1;Juan;15/01/2025 20:57:22;out
 1;Juan;15/01/2025 20:57:24;in
 1;Juan;15/01/2025 20:57:26;out
--;-;15/01/2025 20:57:30;Código erróneo
+-;-;15/01/2025 20:57:30;Cï¿½digo errï¿½neo
 1;Juan;16/01/2025 18:12:35;in
--;-;16/01/2025 19:59:40;Código erróneo
+-;-;16/01/2025 19:59:40;Cï¿½digo errï¿½neo
 1;Juan;16/01/2025 20:17:59;out
 4;Ana;16/01/2025 20:18:04;in
 4;Ana;16/01/2025 20:18:06;out
 4;Ana;16/01/2025 20:18:08;in
--;-;16/01/2025 21:01:19;Código erróneo
--;-;16/01/2025 21:07:26;Código erróneo
--;-;16/01/2025 21:12:53;Código erróneo
--;-;16/01/2025 21:14:33;Código erróneo
--;-;16/01/2025 21:16:41;Código erróneo
--;-;16/01/2025 21:18:30;Código erróneo
--;-;16/01/2025 21:19:44;Código erróneo
--;-;16/01/2025 21:21:32;Código erróneo
--;-;16/01/2025 21:21:47;Código erróneo
--;-;16/01/2025 21:22:28;Código erróneo
--;-;16/01/2025 23:12:22;Código erróneo
--;-;16/01/2025 23:13:04;Código erróneo
--;-;16/01/2025 23:13:16;Código erróneo
--;-;16/01/2025 23:15:45;Código erróneo
+-;-;16/01/2025 21:01:19;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:07:26;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:12:53;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:14:33;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:16:41;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:18:30;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:19:44;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:21:32;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:21:47;Cï¿½digo errï¿½neo
+-;-;16/01/2025 21:22:28;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:12:22;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:13:04;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:13:16;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:15:45;Cï¿½digo errï¿½neo
 1;Juan;16/01/2025 23:18:57;in
--;-;16/01/2025 23:19:03;Código erróneo
--;-;16/01/2025 23:22:46;Código erróneo
--;-;16/01/2025 23:23:03;Código erróneo
--;-;16/01/2025 23:44:30;Código erróneo
--;-;16/01/2025 23:53:51;Código erróneo
--;-;17/01/2025 00:01:51;Código erróneo
--;-;17/01/2025 00:07:21;Código erróneo
--;-;17/01/2025 00:15:30;Código erróneo
--;-;17/01/2025 00:15:43;Código erróneo
--;-;17/01/2025 00:16:40;Código erróneo
--;-;17/01/2025 00:16:44;Código erróneo
--;-;17/01/2025 00:16:59;Código erróneo
--;-;17/01/2025 00:27:10;Código erróneo
--;-;17/01/2025 00:27:24;Código erróneo
+-;-;16/01/2025 23:19:03;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:22:46;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:23:03;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:44:30;Cï¿½digo errï¿½neo
+-;-;16/01/2025 23:53:51;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:01:51;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:07:21;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:15:30;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:15:43;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:16:40;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:16:44;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:16:59;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:27:10;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:27:24;Cï¿½digo errï¿½neo
 1;Juan;17/01/2025 00:27:34;out
 1;Juan;17/01/2025 00:28:00;Fichaje cancelado
 1;Juan;17/01/2025 00:28:06;Fichaje cancelado
--;-;17/01/2025 00:30:46;Código erróneo
--;-;17/01/2025 00:49:56;Código erróneo
--;-;17/01/2025 00:50:01;Código erróneo
--;-;17/01/2025 00:52:53;Código erróneo
+-;-;17/01/2025 00:30:46;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:49:56;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:50:01;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:52:53;Cï¿½digo errï¿½neo
 1;Juan;17/01/2025 00:53:01;Fichaje cancelado
--;-;17/01/2025 00:53:07;Código erróneo
--;-;17/01/2025 00:53:14;Código erróneo
--;-;17/01/2025 00:59:35;Código erróneo
--;-;17/01/2025 10:45:08;Código erróneo
--;-;17/01/2025 11:20:15;Código erróneo
+-;-;17/01/2025 00:53:07;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:53:14;Cï¿½digo errï¿½neo
+-;-;17/01/2025 00:59:35;Cï¿½digo errï¿½neo
+-;-;17/01/2025 10:45:08;Cï¿½digo errï¿½neo
+-;-;17/01/2025 11:20:15;Cï¿½digo errï¿½neo
 1;Juan;17/01/2025 11:26:30;in
--;-;17/01/2025 12:25:57;Código erróneo
--;-;17/01/2025 12:26:19;Código erróneo
--;-;17/01/2025 12:26:25;Código erróneo
+-;-;17/01/2025 12:25:57;Cï¿½digo errï¿½neo
+-;-;17/01/2025 12:26:19;Cï¿½digo errï¿½neo
+-;-;17/01/2025 12:26:25;Cï¿½digo errï¿½neo
 1;Juan;17/01/2025 12:26:38;Fichaje cancelado
 1;Juan;17/01/2025 12:26:47;out
--;-;17/01/2025 15:35:19;Código erróneo
+-;-;17/01/2025 15:35:19;Cï¿½digo errï¿½neo
 1;Juan;17/01/2025 15:35:35;in
 1;Juan;17/01/2025 15:35:52;Fichaje cancelado
--;-;17/01/2025 15:41:21;Código erróneo
--;-;21/01/2025 19:46:50;Código erróneo
--;-;21/01/2025 19:46:54;Código erróneo
+-;-;17/01/2025 15:41:21;Cï¿½digo errï¿½neo
+-;-;21/01/2025 19:46:50;Cï¿½digo errï¿½neo
+-;-;21/01/2025 19:46:54;Cï¿½digo errï¿½neo
 1;Juan;21/01/2025 19:47:07;Fichaje cancelado
 1;Juan;21/01/2025 19:47:14;out
--;-;21/01/2025 20:08:36;Código erróneo
+-;-;21/01/2025 20:08:36;Cï¿½digo errï¿½neo
 1;Juan;21/01/2025 20:30:26;in
 1;Juan;21/01/2025 20:30:30;out
 4;Ana;21/01/2025 20:30:33;in
@@ -108,15 +108,63 @@
 4;Ana;22/01/2025 20:29:47;in
 1;Juan;22/01/2025 20:33:42;in
 -;-;04/02/2025 19:07:23;No hay trabajadores para imprimir
--;-;04/02/2025 19:12:46;Código erróneo
+-;-;04/02/2025 19:12:46;Cï¿½digo errï¿½neo
 -;-;04/02/2025 19:12:54;No hay trabajadores para imprimir
 -;-;04/02/2025 19:13:09;No hay trabajadores para imprimir
 -;-;04/02/2025 19:45:37;Selecciona a algun trabajador para imprimir
 -;-;04/02/2025 19:53:47;Selecciona a algun trabajador para imprimir
 1;Juan;04/02/2025 20:03:54;in
 1;Juan;04/02/2025 20:03:59;out
--;-;04/02/2025 20:04:02;Código erróneo
+-;-;04/02/2025 20:04:02;Cï¿½digo errï¿½neo
 4;Ana;04/02/2025 20:04:10;out
 1;Juan;04/02/2025 20:08:35;in
 1;Juan;04/02/2025 20:09:28;out
 4;Ana;04/02/2025 20:09:33;in
+1;Juan;12/02/2025 13:07:16;in
+-;-;12/02/2025 13:30:52;Fallo acceso a la BBDD - seleccionar_trabajador
+1;Juan;12/02/2025 13:42:03;out
+1;Juan;12/02/2025 13:42:06;Fichaje cancelado
+1;Juan;12/02/2025 13:48:35;in
+-;-;12/02/2025 13:48:37;Selecciona a algï¿½n trabajador para imprimir
+-;-;12/02/2025 13:48:41;Selecciona a algï¿½n trabajador para imprimir
+-;-;12/02/2025 13:48:46;Selecciona a algï¿½n trabajador para imprimir
+-;-;12/02/2025 13:48:48;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:50;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:52;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:54;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:55;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:55;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:55;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:48:56;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:49:00;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:53:10;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:53:24;Cï¿½digo errï¿½neo
+4;Ana;12/02/2025 13:57:56;Fichaje cancelado
+-;-;12/02/2025 13:58:00;Cï¿½digo errï¿½neo
+-;-;12/02/2025 13:58:03;Cï¿½digo errï¿½neo
+-;-;13/02/2025 20:05:26;Cï¿½digo errï¿½neo
+1;Juan;13/02/2025 21:16:03;out
+1;Juan;13/02/2025 23:19:19;in
+1;Juan;13/02/2025 23:19:28;out
+Juan;Perez;13/02/2025 23:25:16;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:25:16;out; -Desconexión forzada-
+Juan;Perez;13/02/2025 23:31:55;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:31:55;out; -Desconexión forzada-
+Juan;Perez;13/02/2025 23:35:49;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:35:49;out; -Desconexión forzada-
+Juan;Perez;13/02/2025 23:36:32;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:36:32;out; -Desconexión forzada-
+Juan;Perez;13/02/2025 23:39:54;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:39:54;out; -Desconexión forzada-
+Juan;Perez;13/02/2025 23:47:21;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:47:21;out; -Desconexión forzada-
+Juan;Perez;13/02/2025 23:49:39;out; -Desconexión forzada-
+Ana;Martinez;13/02/2025 23:49:39;out; -Desconexión forzada-
+Juan;Perez;14/02/2025 11:58:19;out; -Desconexión forzada-
+Ana;Martinez;14/02/2025 11:58:19;out; -Desconexión forzada-
+Juan;Perez;14/02/2025 12:13:10;out; -Desconexión forzada-
+Ana;Martinez;14/02/2025 12:13:10;out; -Desconexión forzada-
+Juan;Perez;14/02/2025 12:13:22;out; -Desconexión forzada-
+Ana;Martinez;14/02/2025 12:13:22;out; -Desconexión forzada-
+Juan;Perez;14/02/2025 12:14:08;out; -Desconexión forzada-
+Ana;Martinez;14/02/2025 12:14:08;out; -Desconexión forzada-
