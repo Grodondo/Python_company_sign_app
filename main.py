@@ -38,6 +38,9 @@ class Main(QMainWindow):
         uic.loadUi("debugUI.ui", self)  # Carga el archivo de interfaz de usuario
         self.setWindowTitle("Fichaje de trabajadores")
         
+        # Cambiar el segundo correo para recibir las notificaciones
+        self.email_manager = EmailSender("hr.team.interfaces@gmail.com", "xnsp jcls xsgp awyx", "dragon.carlos@outlook.es")
+        
         #* Componentes de la UI
         self.setup_frames()
         self.setup_buttons()
@@ -45,8 +48,8 @@ class Main(QMainWindow):
         self.setup_timer()
         self.setup_imprimir()
         
-        # email_manager = EmailSender("hr.team.interfaces@gmail.com", "xnsp jcls xsgp awyx", "dragon.carlos@outlook.es")
-        # email_manager.execute_now()
+        self.schedule_restart(23, 59, 59)
+
 
     def setup_frames(self):
         """
@@ -281,6 +284,7 @@ class Main(QMainWindow):
         accept_button.clicked.connect(lambda: FichajeManager.fichar(trabajador, go_back))
 
     # ------------------------ Métodos para enviar email ------------------------
+    @DeprecationWarning
     def schedule_func(self, func, hour, minute, second):
         """
         Ejecuta una función en un momento específico del día.
@@ -308,19 +312,13 @@ class Main(QMainWindow):
 
             :return: None
             """
+            print(f"Waiting {delay} seconds before executing function...")
             time.sleep(delay)
+            print("Executing function...")
             func()
         
         threading.Thread(target=execute, daemon=True).start()
 
-
-    def restart_now(self):
-        """
-        Reinicia la aplicación.
-
-        Utiliza el módulo 'subprocess' para lanzar una nueva instancia de la aplicación principal 'main.py'.
-        """
-        subprocess.Popen([sys.executable, "main.py"])
 
     def closeEvent(self, event):
         """
@@ -329,41 +327,57 @@ class Main(QMainWindow):
         Se ejecuta EmailSender.execute_now() y se programa el reinicio automático de la aplicación.
         """
         # Manda los emails necesarios antes de cerrar la aplicación
-        email_manager = EmailSender("hr.team.interfaces@gmail.com", "xnsp jcls xsgp awyx", "dragon.carlos@outlook.es")
-        email_manager.send()
+        self.email_manager.send()
         
         # Planifica el reinicio de la aplicación a las 2:00 AM
-        self.schedule_func(func=self.restart_now(), hour=12, minute=13, second=50)
+        now = datetime.now()
+        self.schedule_restart(now.hour, now.minute + 1, now.second)
         
         # Continúa con el cierre de la aplicación
         super().closeEvent(event)
 
-    # def schedule_restart(self, restart_hour, restart_minute, restart_second):
-    #     """
-    #     Programa el reinicio de la aplicación a una hora específica.
+    def schedule_restart(self, restart_hour, restart_minute, restart_second):
+        """Programa el reinicio de la aplicación a una hora específica del día.
 
-    #     Calcula el tiempo de espera hasta la próxima ocurrencia de 'restart_hour' y lanza un hilo en segundo
-    #     plano que, tras esperar ese tiempo, reinicia la aplicación.
+        Args:
+            restart_hour (int): Hora del día (en formato 24h) en la que se debe reiniciar la aplicación.
+            restart_minute (int): Minuto de la hora en la que se debe reiniciar la aplicación.
+            restart_second (int): Segundo del minuto en el que se debe reiniciar la aplicación.
+        """
+        
+        now = datetime.now()
+        restart_time = now.replace(hour=restart_hour, minute=restart_minute, second=restart_second, microsecond=0)
+        # If the restart time has already passed today, schedule for tomorrow
+        if now >= restart_time:
+            restart_time += timedelta(days=1)
+        delay = (restart_time - now).total_seconds()
+        print(f"La aplicación se reiniciará en {delay} segundos.")
 
-    #     :param restart_hour: Hora del día (en formato 24h) en la que se debe reiniciar la aplicación.
-    #     """
-    #     now = datetime.now()
-    #     restart_time = now.replace(hour=restart_hour, minute=restart_minute, second=restart_second, microsecond=0)
-    #     # Si la hora de reinicio ya pasó, programar para el día siguiente
-    #     if now >= restart_time:
-    #         restart_time += timedelta(days=1)
-    #     delay = (restart_time - now).total_seconds()
-    #     print(f"Application will restart in {delay} seconds (at {restart_time}).")
+        # Prepare the command to run the restarter code
+        code = (
+            f"import time; import subprocess; "
+            f"time.sleep({delay}); "
+            f"subprocess.Popen([r'{sys.executable}', r'main.py'])"
+        )
+        command = [sys.executable, "-c", code]
 
-    #     def restart():
-    #         # Esperar el tiempo necesario antes de reiniciar
-    #         time.sleep(delay)
-    #         # Reiniciar la aplicación
-    #         subprocess.Popen([sys.executable, "main.py"])
-    #         print("Application restarted.")
-
-    #     # Iniciar el hilo de reinicio
-    #     threading.Thread(target=restart, daemon=True).start()
+        # Lanza el proceso de reinicio de la aplicación
+        if sys.platform == "win32":
+            # Windows
+            subprocess.Popen(
+                command,
+                creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS,
+                shell=False,
+                close_fds=True
+            )
+        else:
+            # Unix
+            subprocess.Popen(
+                command,
+                start_new_session=True,
+                shell=False,
+                close_fds=True
+            )
 
 if __name__ == "__main__":
     """

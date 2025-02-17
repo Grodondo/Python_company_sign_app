@@ -68,15 +68,6 @@ class EmailSender:
         except Exception as e:
             print(f"Error enviando email a {destino}: {str(e)}")
 
-    # def executes_when_closed(self):
-    #     """Ejecuta acciones cuando la aplicación se cierra"""
-    #     unclosed_entries = Query.get_entries_with_unclosed_checkins()
-    #     if unclosed_entries:
-    #         unclosed_trabajadores = Query.get_trabajadores_given_ids([entry[0] for entry in unclosed_entries])
-    #         self.send_notifications(unclosed_trabajadores)
-    #         self._exit_trabajadores(unclosed_trabajadores)
-    #     else:
-    #         print("No se encontraron fichajes pendientes de cierre")
 
     def send(self):
         unclosed_entries = Query.get_entries_with_unclosed_checkins()
@@ -88,13 +79,3 @@ class EmailSender:
         else:
             print("No se encontraron fichajes pendientes de cierre")
             
-            
-    # def daily_check(self):
-    #     """Ejecuta todo el proceso diariamente"""
-    #     unclosed_entries = Query.get_entries_with_unclosed_checkins()
-    #     if unclosed_entries:
-    #         unclosed_trabajadores = Query.get_trabajadores_given_ids([entry[0] for entry in unclosed_entries])
-    #         self.send_notifications(unclosed_trabajadores)
-    #         self._exit_trabajadores(unclosed_trabajadores)
-    #     else:
-    #         print("No se encontraron fichajes pendientes de cierre")
