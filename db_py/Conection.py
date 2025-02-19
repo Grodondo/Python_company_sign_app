@@ -1,15 +1,15 @@
 import sqlite3
-from Log import log
+# from ..Log import log
 
 class Conection:
     __db__path = "./database/fichajes.db"
     
     def __init__(self):
-        # self.delete_all_values("trabajadores", "reloj")
-        # self.delete_tables("trabajadores", "reloj")
+        self.delete_all_values("trabajadores", "reloj")
+        self.delete_tables("trabajadores", "reloj")
         
-        # self.create_table()
-        # self.add_trabajadores()
+        self.create_table()
+        self.add_trabajadores()
         pass
 
     @classmethod
@@ -20,7 +20,7 @@ class Conection:
             # print("Conexión exitosa")
             return conexion
         except sqlite3.Error as e:
-            log.log_error("Fallo en la conexión a la BBDD")
+            # log.log_error("Fallo en la conexión a la BBDD")
             return None
 
 
@@ -99,10 +99,10 @@ class Conection:
         cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Maria', 'Garcia', '87654321B', '5678', 'out')")
         cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Pedro', 'Lopez', '12348765C', '9101', 'out')")
         cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Ana', 'Martinez', '56781234D', '4321', 'out')")
-        cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Luis', 'Sanchez', '87654321E', '5678', 'out')")
-        cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Laura', 'Gomez', '12348765F', '9101', 'out')")
+        cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Luis', 'Sanchez', '87654321E', '5668', 'out')")
+        cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Laura', 'Gomez', '12348765F', '9876', 'out')")
         cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Carlos', 'Rodriguez', '56781234G', '4321', 'out')")
-        cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Sara', 'Perez', '87654321H', '5678', 'out')")
+        cursor.execute("INSERT INTO trabajadores (nombre, apellidos, dni, codigo, estado) VALUES ('Sara', 'Perez', '87654321H', '5178', 'out')")
         conn.commit()
         conn.close()
         print("Trabajadores añadidos")

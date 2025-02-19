@@ -48,7 +48,8 @@ class Main(QMainWindow):
         self.setup_timer()
         self.setup_imprimir()
         
-        self.schedule_restart(23, 59, 59)
+        # self.schedule_restart(23, 59, 59)
+        # self.schedule_func(sys.exit(app.exec()), 23, 59, 59)
 
 
     def setup_frames(self):
@@ -284,7 +285,6 @@ class Main(QMainWindow):
         accept_button.clicked.connect(lambda: FichajeManager.fichar(trabajador, go_back))
 
     # ------------------------ Métodos para enviar email ------------------------
-    @DeprecationWarning
     def schedule_func(self, func, hour, minute, second):
         """
         Ejecuta una función en un momento específico del día.
@@ -329,7 +329,7 @@ class Main(QMainWindow):
         # Manda los emails necesarios antes de cerrar la aplicación
         self.email_manager.send()
         
-        # Planifica el reinicio de la aplicación a las 2:00 AM
+        # Planifica el reinicio de la aplicación para dentro de un minuto, cambiar a 23:59:59 para reiniciar a las 12 de la noche
         now = datetime.now()
         self.schedule_restart(now.hour, now.minute + 1, now.second)
         

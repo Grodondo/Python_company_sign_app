@@ -1,5 +1,5 @@
 import fpdf
-from datetime import datetime
+from datetime import datetime, timedelta
 from db_py.queries import Query
 
 class PDF:
@@ -7,6 +7,8 @@ class PDF:
         self.trabajadores = trabajadores
         self.start_datetime = start_datetime
         self.end_datetime = end_datetime
+        
+        self.total_time = 0
         
         # Formatear las fechas y horas para el nombre del archivo
         self.date_start_str = self._format_datetime(start_datetime, "yyyy-MM-dd_HH-mm-ss")
@@ -56,7 +58,6 @@ class PDF:
         pdf.ln(15)
 
     def _add_worker_section(self, pdf, trabajador):
-        """Agregar sección para cada trabajador"""
         worker_id = trabajador[0]
         nombre = f"{trabajador[1]} {trabajador[2]}"
         dni = trabajador[3]
@@ -70,7 +71,7 @@ class PDF:
         pdf.cell(0, 10, f'DNI: {dni} - Código: {codigo}', 0, 1)
         pdf.cell(0, 10, f'Estado Actual: {estado.upper()}', 0, 1)
         pdf.ln(5)
-
+        
         # Obtener check-ins usando el método centralizado de consulta
         checkins = Query.entries_between_datetimes(
             'reloj',
@@ -79,21 +80,26 @@ class PDF:
             worker_id
         )
         
-        # Agregar tabla de check-ins (ahora con tiempo transcurrido para cada 'OUT')
+        # Procesar check-ins y obtener tiempo total
+        total_seconds = 0
         if checkins:
-            self._create_checkins_table(pdf, checkins)
+            total_seconds = self._create_checkins_table(pdf, checkins)
         else:
             pdf.cell(0, 10, 'No se encontraron check-ins en este período.', 0, 1)
             pdf.ln(10)
+        
+        # Mostrar tiempo total
+        total_time_str = self._format_elapsed(total_seconds)
+        pdf.cell(0, 10, f'Tiempo total: {total_time_str}', 0, 1)
+        pdf.ln(5)
 
         # Verificar salto de página
         if pdf.get_y() > 250:
             pdf.add_page()
 
     def _create_checkins_table(self, pdf, checkins):
-        """Crear tabla formateada de check-ins con tiempo transcurrido para cada check-in 'OUT'"""
+        """Crear tabla formateada de check-ins y retornar el tiempo total acumulado"""
         pdf.set_font('Times', 'B', 11)
-        # Definir anchos de columna para cuatro columnas: Fecha, Hora, Estado, Tiempo
         col_widths = [40, 30, 30, 40]
         
         # Cabecera de la tabla
@@ -102,12 +108,11 @@ class PDF:
         pdf.cell(col_widths[2], 10, 'Estado', 1, 0, 'C')
         pdf.cell(col_widths[3], 10, 'Tiempo Checkin', 1, 1, 'C')
         
-        # Ordenar los check-ins cronológicamente usando nuestro método auxiliar
         sorted_checkins = sorted(checkins, key=self._entry_to_datetime)
         
-        # Filas de la tabla con cálculo del tiempo transcurrido
         pdf.set_font('Times', '', 11)
         last_in = None
+        total_seconds = 0  # Inicializar el total de segundos
         for entry in sorted_checkins:
             dt = self._entry_to_datetime(entry)
             fecha_display = dt.strftime("%Y-%m-%d")
@@ -121,7 +126,8 @@ class PDF:
                 if last_in is not None:
                     elapsed = dt - last_in
                     elapsed_str = self._format_elapsed(elapsed)
-                    last_in = None  # Reiniciar después de emparejar con un IN
+                    total_seconds += int(elapsed.total_seconds())  # Acumular tiempo
+                    last_in = None
                 else:
                     elapsed_str = "N/A"
             else:
@@ -133,6 +139,7 @@ class PDF:
             pdf.cell(col_widths[3], 10, elapsed_str, 1, 1, 'C')
         
         pdf.ln(10)
+        return total_seconds  # Retornar el total acumulado
 
     def _entry_to_datetime(self, entry):
         """Convierte una entrada de check-in a un objeto datetime."""
@@ -149,8 +156,11 @@ class PDF:
             return datetime.strptime(dt_str, "%Y-%m-%d %H:%M")
         
     def _format_elapsed(self, elapsed):
-        """Formatea el tiempo transcurrido como Hh Mm Ss."""
-        total_seconds = int(elapsed.total_seconds())
+        """Formatea el tiempo transcurrido como Hh Mm Ss. Acepta timedelta o segundos."""
+        if isinstance(elapsed, timedelta):
+            total_seconds = int(elapsed.total_seconds())
+        else:
+            total_seconds = int(elapsed)
         hours = total_seconds // 3600
         minutes = (total_seconds % 3600) // 60
         seconds = total_seconds % 60

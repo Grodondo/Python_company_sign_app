@@ -193,3 +193,79 @@ Ana;Martinez;17/02/2025 14:05:49;out; -Desconexión forzada-
 -;-;17/02/2025 14:16:07;Código erróneo
 Juan;Perez;17/02/2025 14:16:17;out; -Desconexión forzada-
 Ana;Martinez;17/02/2025 14:16:17;out; -Desconexión forzada-
+Juan;Perez;17/02/2025 20:37:03;out; -Desconexión forzada-
+Ana;Martinez;17/02/2025 20:37:03;out; -Desconexión forzada-
+Juan;Perez;17/02/2025 20:40:11;out; -Desconexión forzada-
+Ana;Martinez;17/02/2025 20:40:11;out; -Desconexión forzada-
+Juan;Perez;18/02/2025 19:24:49;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 19:24:49;out; -Desconexión forzada-
+Juan;Perez;18/02/2025 19:48:57;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 19:48:57;out; -Desconexión forzada-
+Juan;Perez;18/02/2025 19:50:26;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 19:50:26;out; -Desconexión forzada-
+1;Juan;18/02/2025 19:52:18;out
+Juan;Perez;18/02/2025 19:54:38;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 19:54:38;out; -Desconexión forzada-
+1;Juan;18/02/2025 20:02:54;in
+1;Juan;18/02/2025 20:02:58;out
+5;Luis;18/02/2025 20:03:19;in
+4;Ana;18/02/2025 20:03:24;in
+4;Ana;18/02/2025 20:03:28;out
+5;Luis;18/02/2025 20:03:32;Fichaje cancelado
+5;Luis;18/02/2025 20:03:49;out
+1;Juan;18/02/2025 20:05:58;Fichaje cancelado
+4;Ana;18/02/2025 20:06:12;in
+3;Pedro;18/02/2025 20:06:22;in
+3;Pedro;18/02/2025 20:06:25;out
+3;Pedro;18/02/2025 20:06:28;Fichaje cancelado
+2;Maria;18/02/2025 20:06:40;Fichaje cancelado
+Juan;Perez;18/02/2025 20:07:14;out; -Desconexión forzada-
+Pedro;Lopez;18/02/2025 20:07:14;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 20:07:14;out; -Desconexión forzada-
+Luis;Sanchez;18/02/2025 20:07:14;out; -Desconexión forzada-
+-;-;18/02/2025 20:13:37;Fallo acceso a la BBDD - fichar
+-;-;18/02/2025 20:13:50;Fallo acceso a la BBDD - fichar
+1;Juan;18/02/2025 20:14:18;Fichaje cancelado
+Juan;Perez;18/02/2025 20:14:35;out; -Desconexión forzada-
+Pedro;Lopez;18/02/2025 20:14:40;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 20:14:46;out; -Desconexión forzada-
+Luis;Sanchez;18/02/2025 20:14:48;out; -Desconexión forzada-
+1;Juan;18/02/2025 20:15:00;in
+Juan;Perez;18/02/2025 20:15:11;out; -Desconexión forzada-
+Pedro;Lopez;18/02/2025 20:15:11;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 20:15:11;out; -Desconexión forzada-
+Luis;Sanchez;18/02/2025 20:15:11;out; -Desconexión forzada-
+1;Juan;18/02/2025 20:17:40;out
+-;-;18/02/2025 20:17:57;Código erróneo
+Juan;Perez;18/02/2025 20:20:33;out; -Desconexión forzada-
+Pedro;Lopez;18/02/2025 20:20:33;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 20:20:33;out; -Desconexión forzada-
+Luis;Sanchez;18/02/2025 20:20:33;out; -Desconexión forzada-
+-;-;18/02/2025 20:21:39;Código erróneo
+-;-;18/02/2025 20:21:50;Código erróneo
+-;-;18/02/2025 20:21:58;Selecciona a algún trabajador para imprimir
+1;Juan;18/02/2025 20:22:07;Fichaje cancelado
+1;Juan;18/02/2025 20:22:50;in
+1;Juan;18/02/2025 20:22:54;out
+1;Juan;18/02/2025 20:22:58;in
+1;Juan;18/02/2025 20:23:02;out
+1;Juan;18/02/2025 20:26:57;Fichaje cancelado
+Juan;Perez;18/02/2025 20:27:20;out; -Desconexión forzada-
+Pedro;Lopez;18/02/2025 20:27:20;out; -Desconexión forzada-
+Ana;Martinez;18/02/2025 20:27:20;out; -Desconexión forzada-
+Luis;Sanchez;18/02/2025 20:27:20;out; -Desconexión forzada-
+-;-;19/02/2025 01:20:54;Código erróneo
+3;Pedro;19/02/2025 01:21:06;in
+-;-;19/02/2025 01:21:06;Código erróneo
+-;-;19/02/2025 01:21:11;Código erróneo
+-;-;19/02/2025 01:21:12;Código erróneo
+3;Pedro;19/02/2025 01:21:18;Fichaje cancelado
+3;Pedro;19/02/2025 01:21:24;Fichaje cancelado
+3;Pedro;19/02/2025 01:21:34;out
+3;Pedro;19/02/2025 01:21:39;in
+5;Luis;19/02/2025 01:22:10;in
+-;-;19/02/2025 01:22:21;Selecciona a algún trabajador para imprimir
+Juan;Perez;19/02/2025 01:23:34;out; -Desconexión forzada-
+Pedro;Lopez;19/02/2025 01:23:34;out; -Desconexión forzada-
+Ana;Martinez;19/02/2025 01:23:34;out; -Desconexión forzada-
+Luis;Sanchez;19/02/2025 01:23:34;out; -Desconexión forzada-
