@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Documento de Pruebas - Sistema de Control de Presencia</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 40px;
+      background-color: #f7f9fc;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 2.5em;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      border-bottom: 2px solid #2c3e50;
+      padding-bottom: 5px;
+      margin-top: 40px;
+    }
+    .header-info {
+      border: 2px solid #2c3e50;
+      padding: 15px;
+      background: #e8f0fe;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #2c3e50;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .code-block {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      font-family: Consolas, monospace;
+      border-left: 5px solid #2c3e50;
+    }
+    .mermaid {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>Documento de Pruebas - Sistema de Control de Presencia</h1>
+  
+  <div class="header-info">
+    <p><strong>Profesor:</strong> Luis Javier Calle Blanco</p>
+    <p><strong>Prueba Práctica:</strong> RA8 - Pruebas y Evaluación de Resultados</p>
+    <p><strong>Fecha de entrega:</strong> 25/02/2025</p>
+  </div>
+  
+  <!-- Sección: Pruebas de Caja Negra -->
+  <h2>1. Pruebas de Caja Negra - Fase Fichaje</h2>
+  <p><strong>Caso de Uso:</strong> Introducción del Código de Usuario</p>
+  <p><strong>Sección de la Aplicación:</strong> Fase Fichaje (Pantalla Principal)</p>
+  <p><strong>Objetivo de la Prueba:</strong> Validar que el código introducido por el trabajador cumpla con las especificaciones y que el sistema determine correctamente si se debe realizar un fichaje de entrada o de salida, mostrando mensajes informativos o errores según corresponda.</p>
+  
+  <table>
+    <tr>
+      <th>ID-Prueba</th>
+      <th>Entrada</th>
+      <th>Salida Esperada</th>
+      <th>Salida Recibida</th>
+    </tr>
+    <tr>
+      <td>P-01</td>
+      <td>Código correcto (ej. 1234)</td>
+      <td>La aplicación muestra el mensaje: "¿Desea fichar a [Nombre] (Entrada/Salida)?"</td>
+      <td>OK</td>
+    </tr>
+    <tr>
+      <td>P-02</td>
+      <td>Código vacío</td>
+      <td>Muestra mensaje de error: "Introduzca Código" durante 3 segundos</td>
+      <td>OK</td>
+    </tr>
+    <tr>
+      <td>P-03</td>
+      <td>Código con formato alfanumérico (ej. ABCD)</td>
+      <td>Muestra mensaje de error: "Formato incorrecto, solo números permitidos" durante 3 segundos</td>
+      <td>OK</td>
+    </tr>
+    <tr>
+      <td>P-04</td>
+      <td>Código inexistente en la base de datos (ej. 9999)</td>
+      <td>Muestra mensaje de error: "Código no registrado en el sistema" durante 3 segundos</td>
+      <td>OK</td>
+    </tr>
+    <tr>
+      <td>P-05</td>
+      <td>Error en acceso a la BBDD (simulado)</td>
+      <td>Muestra mensaje de error: "Fallo acceso a la BBDD" durante 3 segundos</td>
+      <td>OK</td>
+    </tr>
+  </table>
+  
+  <!-- Sección: Pruebas de Caja Blanca -->
+  <h2>2. Pruebas de Caja Blanca</h2>
+  <p>Se definen pruebas unitarias de caja blanca para los siguientes métodos:</p>
+  <ul>
+    <li>Métodos de validación y aceptación de un nuevo fichaje.</li>
+    <li>Método encargado de recoger los datos para imprimir el listado de fichajes.</li>
+  </ul>
+  <p>En cada caso se establecen los caminos de ejecución para cubrir todas las sentencias (cobertura de sentencias) y las posibles ramas de control (cobertura de decisión).</p>
+  
+  <!-- Sub-sección 2.1: Validación y Aceptación de Fichaje -->
+  <h3>2.1 Validación y Aceptación de Fichaje</h3>
+  <p><strong>Método:</strong> <code>Main.aceptar_fichaje</code></p>
+  <p><strong>Código a Probar:</strong></p>
+  <div class="code-block">
+    <pre><code>
+def aceptar_fichaje(self, trabajador):
+    if not isinstance(trabajador, Trabajador):
+        print("Error: parámetro no es instancia de Trabajador")
+        return
+    self.lower_frame.show()
+    info_text = self.findChild(QTextEdit, 'show_info')
+    accept_button = self.findChild(QPushButton, 'accept_button')
+    reject_button = self.findChild(QPushButton, 'reject_button')
+    info_text.setText(f"¿Deseas fichar a {trabajador.nombre} {trabajador.apellidos}?")
+    
+    try:
+        accept_button.clicked.disconnect()
+        reject_button.clicked.disconnect()
+    except TypeError:
+        pass
+    
+    reject_button.clicked.connect(lambda: (go_back(), log.log_reject_acceso(trabajador, "Fichaje cancelado")))
+    accept_button.clicked.connect(lambda: FichajeManager.fichar(trabajador, go_back))
+    </code></pre>
+  </div>
+  
+  <h4>Cobertura de Sentencias</h4>
+  <ul>
+    <li>Verificar si <code>trabajador</code> es instancia de <code>Trabajador</code> (se ejecuta o no la condición).</li>
+    <li>Ejecución de <code>self.lower_frame.show()</code> y configuración del mensaje.</li>
+    <li>Asignación y desconexión de señales a los botones.</li>
+  </ul>
+  
+  <h4>Cobertura de Decisión</h4>
+  <ul>
+    <li><strong>Camino 1:</strong> El parámetro <code>trabajador</code> no es una instancia de <code>Trabajador</code>: se imprime un error y se retorna.</li>
+    <li><strong>Camino 2:</strong> El parámetro es válido y se muestra el panel de confirmación.
+      <ul>
+        <li><em>Decisión A:</em> El usuario confirma el fichaje (clic en aceptar), ejecutándose <code>FichajeManager.fichar</code>.</li>
+        <li><em>Decisión B:</em> El usuario cancela (clic en rechazar), ejecutándose la función <code>go_back</code> y registrándose el rechazo.</li>
+      </ul>
+    </li>
+  </ul>
+  
+  <div class="mermaid">
+    graph TD;
+      A[Inicio: recibir trabajador] --> B{Trabajador válido?};
+      B -- No --> C[Mostrar error y finalizar];
+      B -- Sí --> D[Mostrar confirmación];
+      D --> E{Usuario confirma?};
+      E -- Sí --> F[Ejecutar fichaje];
+      E -- No --> G[Cancelar operación]
+  </div>
+  
+  <!-- Sub-sección 2.2: Recogida de Datos para Imprimir Listado de Fichajes -->
+  <h3>2.2 Recogida de Datos para Imprimir Listado de Fichajes</h3>
+  <p><strong>Método:</strong> <code>Main.update_checkins</code></p>
+  <p><strong>Código a Probar:</strong></p>
+  <div class="code-block">
+    <pre><code>
+def update_checkins(self):
+    start_date = self.date_start.dateTime().toString(f"{self.date_format} {self.time_format}")
+    end_date = self.date_end.dateTime().toString(f"{self.date_format} {self.time_format}")
+    
+    checkins = Query.get_trabajadores_between_datetimes(start_date, end_date)
+    self.lista_checkins.clear()
+    for checkin in checkins:
+        item = QListWidgetItem(f"{checkin[1]} {checkin[2]} - {checkin[3]} - {checkin[4]}")
+        item.setData(Qt.ItemDataRole.UserRole, checkin)
+        self.lista_checkins.addItem(item)
+    </code></pre>
+  </div>
+  
+  <h4>Cobertura de Sentencias</h4>
+  <ul>
+    <li>Conversión y formateo de las fechas de inicio y fin.</li>
+    <li>Ejecución de la consulta a la base de datos para obtener fichajes.</li>
+    <li>Limpieza del widget de fichajes (<code>self.lista_checkins.clear()</code>).</li>
+    <li>Iteración sobre los resultados para repoblar la lista.</li>
+  </ul>
+  
+  <h4>Cobertura de Decisión</h4>
+  <ul>
+    <li><strong>Camino 1:</strong> La consulta retorna uno o más resultados y se recorre el bucle, agregando elementos a la lista.</li>
+    <li><strong>Camino 2:</strong> La consulta retorna una lista vacía, por lo que el bucle no se ejecuta y la lista queda vacía.</li>
+  </ul>
+  
+  <div class="mermaid">
+    graph TD;
+      A[Obtener fechas de inicio y fin] --> B[Formatear fechas];
+      B --> C[Ejecutar consulta de fichajes];
+      C --> D{Existen resultados?};
+      D -- Si --> E[Recorrer resultados y llenar lista];
+      D -- No --> F[Lista de fichajes vacía]
+  </div>
+  
+  <footer>
+    <p><strong>Autor:</strong> Carlos Arroyo Caballero</p>
+    <p><strong>Fecha:</strong> 25/02/2025</p>
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</body>
+</html>
