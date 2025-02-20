@@ -269,3 +269,14 @@ Juan;Perez;19/02/2025 01:23:34;out; -Desconexión forzada-
 Pedro;Lopez;19/02/2025 01:23:34;out; -Desconexión forzada-
 Ana;Martinez;19/02/2025 01:23:34;out; -Desconexión forzada-
 Luis;Sanchez;19/02/2025 01:23:34;out; -Desconexión forzada-
+Juan;Perez;20/02/2025 12:42:00;out; -Desconexión forzada-
+Pedro;Lopez;20/02/2025 12:42:00;out; -Desconexión forzada-
+Ana;Martinez;20/02/2025 12:42:00;out; -Desconexión forzada-
+Luis;Sanchez;20/02/2025 12:42:00;out; -Desconexión forzada-
+1;Juan;20/02/2025 13:04:56;Fichaje cancelado
+-;-;20/02/2025 13:05:07;Código erróneo
+-;-;20/02/2025 13:06:32;Código erróneo
+Juan;Perez;20/02/2025 13:17:24;out; -Desconexión forzada-
+Pedro;Lopez;20/02/2025 13:17:24;out; -Desconexión forzada-
+Ana;Martinez;20/02/2025 13:17:24;out; -Desconexión forzada-
+Luis;Sanchez;20/02/2025 13:17:24;out; -Desconexión forzada-
