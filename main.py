@@ -38,8 +38,8 @@ class Main(QMainWindow):
         uic.loadUi("debugUI.ui", self)  # Carga el archivo de interfaz de usuario
         self.setWindowTitle("Fichaje de trabajadores")
         
-        # Cambiar el segundo correo para recibir las notificaciones
-        self.email_manager = EmailSender("hr.team.interfaces@gmail.com", "xnsp jcls xsgp awyx", "dragon.carlos@outlook.es")
+        # TODO: Cambiar el segundo correo para recibir las notificaciones
+        self.email_manager = EmailSender("hr.team.interfaces@gmail.com", "xnsp jcls xsgp awyx", "REDACTED")
         
         #* Componentes de la UI
         self.setup_frames()

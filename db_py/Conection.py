@@ -1,5 +1,5 @@
 import sqlite3
-# from ..Log import log
+from Log import log
 
 class Conection:
     __db__path = "./database/fichajes.db"
